@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from googleapiclient.discovery import build
 from dotenv import load_dotenv
 import os
-
+#import requests
 import json
 
 from songs.models import NewVideo
@@ -27,9 +27,14 @@ def search_api():
     youtube = build(api_service_name, api_version,
                     developerKey = DEVELOPER_KEY)
 
+
+    #r = requests.get('http://ws.audioscrobbler.com/2.0/?method=track.search&track=Believe&api_key=2e6a35d37b6129caf404f0699e8f7474&format=json')
+    #data_string = json.loads(r.content)
+    #print (data_string)
+
     request = youtube.search().list(
         part='id,snippet',
-        maxResults=20,
+        maxResults=1,
         q='instrumental edm',
         relevanceLanguage='en',
         type='video',
@@ -37,6 +42,8 @@ def search_api():
         videoLicense='creativeCommon',
         videoSyndicated='true',
     ).execute()
+
+    
 
     videos = []
     result_count = 0
@@ -48,6 +55,7 @@ def search_api():
         video_id            = search_result['id']['videoId']
         video_description   = search_result['snippet']['description']
         video_description   = html_reverse_escape(video_description)
+        genero = 
       
         try:
             new_videos = NewVideo(
