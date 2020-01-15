@@ -24,9 +24,8 @@ export default {
             fields: [
                 { key: 'video_title', label:'Título' },
                 { key: 'video_id', label: 'ID' },
-                { key: 'labeled', label: 'Labeled' },
-                { key: 'video_description', label: 'Descripción del Video' },
-                { key: 'predicted_moods', label: 'Emoción Predicha' }
+                { key: 'moods', label: 'Emoción Etiquetada' },
+                { key: 'predicted_moods', label: 'Emoción Recomendada' },
             ],
             videos: []
         }
