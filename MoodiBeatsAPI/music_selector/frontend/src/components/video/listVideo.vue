@@ -27,6 +27,7 @@ export default {
                 { key: 'moods', label: 'Emoción Etiquetada' },
                 { key: 'predicted_moods', label: 'Emoción Recomendada' },
             ],
+        
             videos: []
         }
     },
