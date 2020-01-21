@@ -51,8 +51,8 @@ def getMoodGenreData(*args, **kwargs):
     return JsonResponse(data, safe=False)
 
 def getNameData(*args, **kwargs):
-    '''La función se encarga de realizar una consulya a la DB y extraer
-    elementos que cumplan con el nombre que se le pasa po parámetro.
+    '''La función se encarga de realizar una consulta a la DB y extraer
+    elementos que cumplan o contengan parte del nombre que se le pasa por parámetro.
 
     Args:
         *args: Es una tupla de parámetros posicionales
@@ -61,18 +61,7 @@ def getNameData(*args, **kwargs):
     Returns:
         Json:Con los valore ya filtrados.
     '''
-    name = switch(kwargs.get('name'))
-    queryset = NewVideo.objects.filter(video_title=name)
-    data = list(queryset.values('video_id', 'video_tittle', 'moods', 'predictes_moods'))
-    return JsonResponse(data, sage=False)
-
-    '''La función se encarga de realizar una consulya a la DB y extraer
-    elementos que cumplan com una emocion y género determinado.
-
-    Args:
-        *args: Es una tupla de parámetros posicionales
-        **kwargs: Es un diccionario de parametros con nombre
-
-    Returns:
-        Json:Con los valore ya filtrados.
-    '''
+    name = kwargs.get('name')
+    queryset = NewVideo.objects.filter(video_title__contains=name)
+    data = list(queryset.values('video_id', 'video_title', 'moods', 'predicted_moods'))
+    return JsonResponse(data, safe=False)
