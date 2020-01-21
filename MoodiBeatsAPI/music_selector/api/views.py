@@ -23,3 +23,10 @@ def getMoodData(*args, **kwargs):
     queryset = NewVideo.objects.filter(moods=numberMood)
     data = list(queryset.values("video_id", "video_title"))
     return JsonResponse(data, safe=False)
+
+def getMoodGenreData(*args, **kwargs):
+    numberMood = switch(kwargs.get('mood'))
+    genero = kwargs.get('genre')
+    queryset = NewVideo.objects.filter(moods=numberMood).filter(genre=genero)
+    data = list(queryset.values("video_id", "video_title"))
+    return JsonResponse(data, safe=False)

@@ -115,9 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-"""REST_FRAMEWORK = {
-    'PAGE_SIZE': 20
-}"""
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
