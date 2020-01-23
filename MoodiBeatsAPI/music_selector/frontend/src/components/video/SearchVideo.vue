@@ -2,23 +2,18 @@
 
 	<div class="container">
 
-		<h1>SISTEMAS DE RECOMENDACION MUSICAL</h1>
-
+        <br>
 		<div class="row">
-
 			<div class="col-md-12">
 				<div id="yt" align="center">
 
 					<iframe v-bind:class="responsive" v-bind:width="ancho" v-bind:height="alto" v-bind:src="url + video"
 						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
 					</iframe>
-
                     <hr>
-					<!-- <label for="idvideo"><strong>Copia y Pega el ID del video (Youtube) que quieres ver:</strong></label> -->
-                    
                     <!-- ************************************************************************************ -->
                     <div >
-                        <b-form @submit="sub" inline> 
+                        <b-form inline @submit="onSubmit" > 
 
                                     <label class="mr-sm-2" for="inline-form-custom-select-pref">Género</label>
                                     <!-- Este es el select con las opciones de genero -->
@@ -40,20 +35,22 @@
                                         id="inline-form-custom-select-pref">
                                     </b-form-select>
                                     <hr>
-                                    <b-form-input v-model="video" id="idvideo" type="text" class="form-control input-lg w-25" placeholder="Canción"></b-form-input> 
+                                    <b-form-input v-model="inputVariable" type="text" class="form-control input-lg w-25" placeholder="Canción"></b-form-input> 
                                     <hr>             
                                     <b-button class="form-control my-2 w-25" type="submit"> Buscar </b-button>
                         </b-form>
                         </div>
                     <!-- ************************************************************************************ -->
-					<!--<input v-model="video" id="idvideo" type="text" placeholder="Ejemplo: nkA-Tl4zv-E"
-						class="form-control input-lg" value="nkA-Tl4zv-E">-->
 					<p style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 						<strong>El ID del video actual es: </strong> {{ video }}
-                        <hr>
+                        <br>
                         <strong> La emoción es: </strong> {{ selectEmocion }}
-                        <hr>
+                        <br>
                         <strong> El género es: </strong> {{ selectGenero }}
+                        <br>
+                        <strong> La prueba generó: </strong> {{ respuesta }}
+                        <br>
+                        <strong> La prueba 2 generó: </strong> {{ inputVariable }}
 					</p>
 
 				</div>
@@ -102,6 +99,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -127,7 +126,26 @@ export default {
       video: "fBI4-eTBMqo",
       borde: "1",
       pcompleta: null,
+
+      inputVariable: null,
+      respuesta: []
     };
+  },
+
+  methods: {
+
+    onSubmit(evt) {
+      evt.preventDefault();
+      
+      const path = `http://localhost:8000/api/v2/songs-name/${this.inputVariable}`;
+      axios.get(path, {responseType: 'json'}).then(response => {
+          this.respuesta = response.data
+          this.video = this.respuesta[0].video_id  
+        })
+        .catch(error => {
+          console.log("*************************** -->" + error)
+        }); 
+    }
   }
 };
 </script>

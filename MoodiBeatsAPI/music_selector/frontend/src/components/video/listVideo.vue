@@ -33,7 +33,6 @@ export default {
     },
     methods: {
         getVideos () {
-
             const path = 'http://localhost:8000/api/v2/new-videos/'
             axios.get(path).then((response) => {
                 this.videos = response.data

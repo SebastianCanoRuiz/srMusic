@@ -62,6 +62,6 @@ def getNameData(*args, **kwargs):
         Json:Con los valore ya filtrados.
     '''
     name = kwargs.get('name')
-    queryset = NewVideo.objects.filter(video_title__contains=name)
+    queryset = NewVideo.objects.filter(video_title__icontains=name)
     data = list(queryset.values('video_id', 'video_title', 'moods', 'predicted_moods'))
     return JsonResponse(data, safe=False)

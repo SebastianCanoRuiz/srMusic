@@ -30,13 +30,6 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8081',
-    'http://localhost:8080',
-)
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	#Mis Aplicaciones
-	'songs',
+    # Mis Aplicaciones
+    'songs',
     'rest_framework',
     'corsheaders',
 ]
@@ -88,8 +81,8 @@ WSGI_APPLICATION = 'music_selector.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'moodibeats', # Name of our database
-        'USER': 'postgres', # This would be different for you
+        'NAME': 'moodibeats',  # Name of our database
+        'USER': 'postgres',  # This would be different for you
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -129,6 +122,19 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',
+    'http://127.0.0.1:8080',
+)
+
+CORS_ORIGIN_REGEX_WHITELIST = (
+    'http://localhost:8080',
+    'http://127.0.0.1:8080',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
