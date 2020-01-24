@@ -12,11 +12,6 @@ class NewVideoAPIView(generics.ListCreateAPIView):
     queryset = NewVideo.objects.all()
     serializer_class = NewVideoSerializer
 
-def switch(argument):
-    #función que se encraga de pasar un argumento numérico a la evaluaciom del mims
-    switcher = {1: 'HAPPY', 2: 'IN-LOVE', 3: 'SAD', 4: 'ANGRY'}
-    return switcher.get(int(argument))
-
 def getMoodData(*args, **kwargs):
     '''La función se encarga de realizar una consulya a la DB y extraer
     elementos que cumplan com una emocion determinada
@@ -28,9 +23,10 @@ def getMoodData(*args, **kwargs):
     Returns:
         Json:Con los valore ya filtrados.
     '''
-    numberMood = switch(kwargs.get('mood'))
-    queryset = NewVideo.objects.filter(moods=numberMood)
-    data = list(queryset.values("video_id", "video_title", "moods", "predicted_moods", "video_type"))
+    #numberMood = switch(kwargs.get('mood'))
+    mood = kwargs.get('mood')
+    queryset = NewVideo.objects.filter(predicted_moods__iexact=mood)
+    data = list(queryset.values("video_id", "video_title", "predicted_moods", "video_type"))
     return JsonResponse(data, safe=False)
 
 def getMoodGenreData(*args, **kwargs):
@@ -44,10 +40,11 @@ def getMoodGenreData(*args, **kwargs):
     Returns:
         Json:Con los valore ya filtrados.
     '''
-    numberMood = switch(kwargs.get('mood'))
+    #numberMood = switch(kwargs.get('mood'))
+    mood = kwargs.get('mood')
     genero = kwargs.get('genre')
-    queryset = NewVideo.objects.filter(moods=numberMood).filter(genre=genero)
-    data = list(queryset.values('video_id', 'video_title', 'moods', 'predicted_moods', "video_type"))
+    queryset = NewVideo.objects.filter(predicted_moods__iexact=mood).filter(video_type__iexact=genero)
+    data = list(queryset.values('video_id', 'video_title', 'predicted_moods', "video_type"))
     return JsonResponse(data, safe=False)
 
 def getNameData(*args, **kwargs):
@@ -63,5 +60,5 @@ def getNameData(*args, **kwargs):
     '''
     name = kwargs.get('name')
     queryset = NewVideo.objects.filter(video_title__icontains=name)
-    data = list(queryset.values('video_id', 'video_title', 'moods', 'predicted_moods', "video_type"))
+    data = list(queryset.values('video_id', 'video_title', 'predicted_moods', "video_type"))
     return JsonResponse(data, safe=False)

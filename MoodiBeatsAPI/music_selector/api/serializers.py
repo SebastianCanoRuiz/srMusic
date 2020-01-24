@@ -10,4 +10,5 @@ class NewVideoSerializer(serializers.ModelSerializer):
 			'video_id',
 			'moods',
 			'predicted_moods',
+			'video_type',
 		]
