@@ -30,7 +30,7 @@ def getMoodData(*args, **kwargs):
     '''
     numberMood = switch(kwargs.get('mood'))
     queryset = NewVideo.objects.filter(moods=numberMood)
-    data = list(queryset.values("video_id", "video_title", "moods", "predicted_moods"))
+    data = list(queryset.values("video_id", "video_title", "moods", "predicted_moods", "video_type"))
     return JsonResponse(data, safe=False)
 
 def getMoodGenreData(*args, **kwargs):
@@ -47,7 +47,7 @@ def getMoodGenreData(*args, **kwargs):
     numberMood = switch(kwargs.get('mood'))
     genero = kwargs.get('genre')
     queryset = NewVideo.objects.filter(moods=numberMood).filter(genre=genero)
-    data = list(queryset.values('video_id', 'video_title', 'moods', 'predicted_moods'))
+    data = list(queryset.values('video_id', 'video_title', 'moods', 'predicted_moods', "video_type"))
     return JsonResponse(data, safe=False)
 
 def getNameData(*args, **kwargs):
@@ -63,5 +63,5 @@ def getNameData(*args, **kwargs):
     '''
     name = kwargs.get('name')
     queryset = NewVideo.objects.filter(video_title__icontains=name)
-    data = list(queryset.values('video_id', 'video_title', 'moods', 'predicted_moods'))
+    data = list(queryset.values('video_id', 'video_title', 'moods', 'predicted_moods', "video_type"))
     return JsonResponse(data, safe=False)

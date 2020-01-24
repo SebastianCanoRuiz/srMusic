@@ -16,6 +16,7 @@ class NewVideo(models.Model):
 	labeled					= models.NullBooleanField()
 	video_description		= models.TextField(null=True, blank=True)
 	predicted_moods			= models.CharField(max_length=17, null=True, blank=True)
+	video_type				= models.TextField(null=True, blank=True)	
 
 	def __str__(self):
 		return self.video_title

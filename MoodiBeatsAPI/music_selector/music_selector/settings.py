@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'music_selector.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'moodibeats',  # Name of our database
+        'NAME': 'sr_music',  # Name of our database
         'USER': 'postgres',  # This would be different for you
         'PASSWORD': '',
         'HOST': 'localhost',
