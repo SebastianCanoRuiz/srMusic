@@ -57,8 +57,7 @@
 			</div>
 		</div>
 
-		<hr style="border: 1px dashed #999;" />
-
+		<hr>
 <!-- ************************************** RECOMENDACIONES ******************************************************** -->
 		<h4>Basado en tu búsqueda y video musical actual te recomendamos los siguientes: </h4>
         <hr>
@@ -83,7 +82,7 @@
 						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
 				</iframe>
 			</div>
-
+      <hr>
 			<div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
           <strong>ID:</strong> {{ recomendacion3.video_id }}
           <br>
@@ -103,7 +102,7 @@
 						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
 				</iframe>
 			</div>
-
+      <hr>
       <div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
           <strong>ID:</strong> {{ recomendacion5.video_id }}
           <br>
@@ -125,8 +124,12 @@
 			</div>
 		</div>
 
+		<hr style="border: 1px dashed #999;">
+
 		<footer align="center">
-			Desarrollado por <a href="#" target="_blank">Jhon Sebastian Cano Ruiz - Johan Steeven Sanchez Sepúlveda</a>
+			<p>Desarrollado por <a href="#" target="_blank">Jhon Sebastian Cano Ruiz - Johan Steeven Sanchez Sepúlveda</a></p>
+      <p align="center">2020</p>
+      
 		</footer>
 
 	</div>
