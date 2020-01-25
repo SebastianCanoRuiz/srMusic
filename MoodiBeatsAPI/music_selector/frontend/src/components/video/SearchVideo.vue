@@ -7,17 +7,19 @@
 			<div class="col-md-12">
 				<div id="yt" align="center">
 
-					<iframe v-bind:class="responsive" v-bind:width="ancho" v-bind:height="alto" v-bind:src="url + video"
-						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
+					<iframe :class="responsive" :width="ancho" :height="alto" :src="url + video"
+					  showinfo=0 controls=1 :frameborder="borde" :allowfullscreen="pcompleta">
 					</iframe>
+                    <br>
                     <hr>
                     <b-alert
+                        id="alert"
                         :show="dismissCountDown"
                         dismissible
-                        v-bind:variant="tipoAlerta"
+                        :variant="tipoAlerta"
                         @dismissed="dismissCountDown=0"
                         @dismiss-count-down="countDownChanged">
-                        {{ mensaje }}
+                        <strong>{{ mensaje }}</strong>
                     </b-alert>
                     <!-- ************************************************************************************ -->
                     <div >
@@ -48,8 +50,8 @@
                                     <b-button class="form-control my-2 w-25" type="submit" > Buscar </b-button>
                                     </b-form>
                         </div>
-                    <!-- ************************************************************************************ -->
-					<p style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+<!-- ************************************************************************************ -->
+					<!-- <p style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 						<strong>El ID del video actual es: </strong> {{ video }}
             <br>
             <strong> La emoción es: </strong> {{ selectEmocion }}
@@ -59,75 +61,87 @@
             <strong> La prueba generó: </strong> {{ respuesta }}
             <br>
             <strong> La prueba 2 generó: </strong> {{ inputVariable }}            
-					</p>
-
+					</p> -->
 				</div>
 			</div>
 		</div>
-
-		<br>
+    <hr style="color: #0056b2;" />
 <!-- ************************************** RECOMENDACIONES ******************************************************** -->
-		<h4>Basado en tu búsqueda y video musical actual te recomendamos los siguientes: </h4>
-        <hr>
-		<div class="row">
+		<br>
+    <h1>Basado en tu búsqueda y video musical actual te recomendamos los siguientes: </h1>
+    <br>
+		<div class="row" :class="visibilidad">
 
 			<div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
-          <strong>ID:</strong> {{ recomendacion1.video_id }}
+          <!-- <strong>ID:</strong> {{ recomendacion1.video_id }} -->
           <br>
-          <strong>Título:</strong> {{ recomendacion1.video_title  }}
+          <a href="./" @click="reproducirRecomendacion($event, recomendacion1)">
+             <h3>{{ recomendacion1.video_title  }}</h3>
+          </a>
           <br>
-        	<iframe v-bind:class="responsive" v-bind:width="ancho" v-bind:height="200" v-bind:src="url + recomendacion1.video_id"
-						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
+        	<iframe :class="responsive" :width="ancho" :height="200" :src="url + recomendacion1.video_id"
+						:frameborder="borde" :allowfullscreen="pcompleta">
 					</iframe>
+
 			</div>
 
 			<div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
-          <strong>ID:</strong> {{ recomendacion2.video_id }}
+          <!-- <strong>ID:</strong> {{ recomendacion2.video_id }} -->
           <br>
-          <strong>Título:</strong> {{ recomendacion2.video_title  }}
+          <a href="./" @click="reproducirRecomendacion($event, recomendacion2)">
+             <h3>{{ recomendacion2.video_title  }}</h3>
+          </a>
         <br>
-        <iframe v-bind:class="responsive" v-bind:width="ancho" v-bind:height="200" v-bind:src="url + recomendacion2.video_id"
-						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
+        <iframe :class="responsive" :width="ancho" :height="200" :src="url + recomendacion2.video_id"
+						:frameborder="borde" :allowfullscreen="pcompleta">
 				</iframe>
 			</div>
       <hr>
 			<div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
-          <strong>ID:</strong> {{ recomendacion3.video_id }}
+          <!-- <strong>ID:</strong> {{ recomendacion3.video_id }} -->
           <br>
-          <strong>Título:</strong> {{ recomendacion3.video_title  }}
+          <a href="./" @click="reproducirRecomendacion($event, recomendacion3)">
+             <h3>{{ recomendacion3.video_title  }}</h3>
+          </a>
         <br>
-        <iframe v-bind:class="responsive" v-bind:width="ancho" v-bind:height="200" v-bind:src="url + recomendacion3.video_id"
-						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
+        <iframe :class="responsive" :width="ancho" :height="200" :src="url + recomendacion3.video_id"
+						:frameborder="borde" :allowfullscreen="pcompleta">
 				</iframe>
 			</div>
 
 			<div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
-          <strong>ID:</strong> {{ recomendacion4.video_id }}
+          <!-- <strong>ID:</strong> {{ recomendacion4.video_id }} -->
           <br>
-          <strong>Título:</strong> {{ recomendacion4.video_title  }}
+          <a href="./" @click="reproducirRecomendacion($event, recomendacion4)">
+             <h3>{{ recomendacion4.video_title  }}</h3>
+          </a>
         <br>
-        <iframe v-bind:class="responsive" v-bind:width="ancho" v-bind:height="200" v-bind:src="url + recomendacion4.video_id"
-						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
+        <iframe :class="responsive" :width="ancho" :height="200" :src="url + recomendacion4.video_id"
+						:frameborder="borde" :allowfullscreen="pcompleta">
 				</iframe>
 			</div>
       <hr>
       <div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
-          <strong>ID:</strong> {{ recomendacion5.video_id }}
+          <!-- <strong>ID:</strong> {{ recomendacion5.video_id }} -->
           <br>
-          <strong>Título:</strong> {{ recomendacion5.video_title  }}
+          <a href="./" @click="reproducirRecomendacion($event, recomendacion5)">
+             <h3>{{ recomendacion5.video_title  }}</h3>
+          </a>
         <br>
-        <iframe v-bind:class="responsive" v-bind:width="ancho" v-bind:height="200" v-bind:src="url + recomendacion5.video_id"
-						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
+        <iframe :class="responsive" :width="ancho" :height="200" :src="url + recomendacion5.video_id"
+						:frameborder="borde" :allowfullscreen="pcompleta">
 				</iframe>
 			</div>
 
       <div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
-          <strong>ID:</strong> {{ recomendacion6.video_id }}
+          <!-- <strong>ID:</strong> {{ recomendacion6.video_id }} -->
           <br>
-          <strong>Título:</strong> {{ recomendacion6.video_title  }}
+          <a href="./" @click="reproducirRecomendacion($event, recomendacion6)">
+             <h3>{{ recomendacion6.video_title  }}</h3>
+          </a>
         <br>
-        <iframe v-bind:class="responsive" v-bind:width="ancho" v-bind:height="200" v-bind:src="url + recomendacion6.video_id"
-						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
+        <iframe :class="responsive" :width="ancho" :height="200" :src="url + recomendacion6.video_id"
+						:frameborder="borde" :allowfullscreen="pcompleta">
 				</iframe>
 			</div>
 		</div>
@@ -149,11 +163,13 @@ import axios from "axios";
 export default {
   data() {
     return {
+      //Variable para la visibilidad de las recomendaciones
+      visibilidad: "d-none",
       //Variables para las alertas
       dismissSecs: 5,
       dismissCountDown: 0,
       mensaje: "",
-      tipoAlerta: "warning",
+      tipoAlerta: "",
 
       //Variables para los selct y el input de búsqueda
       selectEmocion: null,
@@ -207,7 +223,7 @@ export default {
 
 methods: {
 
-    //Disminuye una variable hasta 0 - Metodo recuperado de la Api de Bootstrap-Vue
+    /** Disminuye una variable hasta 0 - Metodo recuperado de la Api de Bootstrap-Vue */
     countDownChanged(dismissCountDown) {
         this.dismissCountDown = dismissCountDown
       },
@@ -218,6 +234,7 @@ methods: {
       },
     //end 
 
+    /** Genera 6 recomendaciones aleatorias basadas en la emocion de la canción en reproducción */
     generarRecomedaciones(response){
               let aleatorio = Math.round(Math.random()* (response.data.length - 1))
               //console.log("Numero Aleatorio-->" + aleatorio)
@@ -274,7 +291,7 @@ methods: {
                 predicted_moods: response.data[aleatorio].predicted_moods,}
     },
 
-    //Genera una alerta, tipo 1 = success, tipo 2 = warning. Cambia el mensaje entre tipos
+    /**Genera una alerta, tipo 1 = success, tipo 2 = warning. Cambia el mensaje entre tipos*/
     generarAlerta(tipo) {
       if(tipo == 1 ){
         this.mensaje = "Las recomendaciones se generaron con exito.",
@@ -289,8 +306,39 @@ methods: {
       this.showAlert()
     },
     
+    reproducirRecomendacion(evt, recomendacion){
+      evt.preventDefault()
+
+      this.video = recomendacion.video_id
+      //Consulta para recomendaciones
+      var path = `http://localhost:8000/api/v2/songs-mood/${recomendacion.predicted_moods}/`;
+          axios
+            .get(path, { responseType: "json" })
+            .then(response => {
+              this.generarRecomedaciones(response)
+              this.generarAlerta(1)
+              })
+            .catch(error => {
+              this.generarAlerta(2)
+              console.log("010R-->" + error);
+            });
+    },
+
+    /*Se invoca cuando se da clic en el botón buscar, analiza 7 casos posibles de busqueda según los 
+    parámetros dde entrada (genero, emocion, nombre). Viendo los casos como 1 y 0 cuando tienen o no
+    algún dato, se pueden encontrar los siguientesa:
+    0 0 0   -->   Caso sin uso debido a que no aporta información para la búsqueda
+    0 0 1   -->   Se genera búsqueda y recomendaciones
+    0 1 0   -->   Se genera recomendaciones
+    0 1 1   -->   Se genera búsqueda y recomendaciones
+    1 0 0   -->   Se genera recomendaciones
+    1 0 1   -->   Se genera búsqueda y recomendaciones
+    1 1 0   -->   Se genera recomendaciones
+    1 1 1   -->   Caso de uso muy específico que no permite generar recomendaciones adecuadas
+    */
     onSubmit(evt) {
       evt.preventDefault();
+      this.visibilidad = "d-flex"
       var path = ``;
 
       if (this.selectGenero == null && this.selectEmocion == null && this.inputVariable != null) {
@@ -410,29 +458,7 @@ methods: {
             });
 
       } else if (this.selectGenero != null && this.selectEmocion != null && this.inputVariable != null) {
-          path = `http://localhost:8000/api/v2/songs-name-mood-genre/${this.inputVariable}/${this.selectEmocion}/${this.selectGenero}/`;
-          axios
-            .get(path, { responseType: "json" })
-            .then(response => {
-              this.respuesta = response.data;
-              this.video = this.respuesta[0].video_id;
-
-            //Consulta para recomendaciones
-            path = `http://localhost:8000/api/v2/songs-mood/${this.respuesta[0].predicted_moods}/`;
-            axios
-              .get(path, { responseType: "json" })
-              .then(response => {
-                this.generarRecomedaciones(response)
-                this.generarAlerta(1)
-                })
-              .catch(error => {
-                console.log("111R-->" + error);
-              });
-            })
-            .catch(error => {
-              this.generarAlerta(2)
-              console.log("111B-->" + error);
-            });
+          this.generarAlerta(3)
 
       } else {
         this.generarAlerta(3)
@@ -443,4 +469,8 @@ methods: {
 </script>
 
 <style lang="css" scoped>
+.oculto {
+  visibility: video;
+}
+
 </style>
