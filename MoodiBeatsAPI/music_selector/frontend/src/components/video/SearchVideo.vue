@@ -11,6 +11,14 @@
 						v-bind:frameborder="borde" v-bind:allowfullscreen="pcompleta">
 					</iframe>
                     <hr>
+                    <b-alert
+                        :show="dismissCountDown"
+                        dismissible
+                        v-bind:variant="tipoAlerta"
+                        @dismissed="dismissCountDown=0"
+                        @dismiss-count-down="countDownChanged">
+                        {{ mensaje }}
+                    </b-alert>
                     <!-- ************************************************************************************ -->
                     <div >
                         <b-form inline @submit="onSubmit" > 
@@ -57,7 +65,7 @@
 			</div>
 		</div>
 
-		<hr>
+		<br>
 <!-- ************************************** RECOMENDACIONES ******************************************************** -->
 		<h4>Basado en tu búsqueda y video musical actual te recomendamos los siguientes: </h4>
         <hr>
@@ -141,11 +149,20 @@ import axios from "axios";
 export default {
   data() {
     return {
+      //Variables para las alertas
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      mensaje: "",
+      tipoAlerta: "warning",
+
+      //Variables para los selct y el input de búsqueda
       selectEmocion: null,
       selectGenero: null,
       inputVariable: null,
-      respuesta: [],
 
+      //Variable para guardar el reponse de la peticion get http
+      respuesta: [],
+      //Variable con todos los generos que se tiene, usado por el select de genero
       generos: [
         { value: null, text: "Elige..." },
         { value: "ROCK", text: "Rock" },
@@ -160,7 +177,7 @@ export default {
         { value: "RAP", text: "Rap" },
         { value: "METAL", text: "Metal" },
       ],
-      
+      //Variable con todos las emociones que se tienen, usado por el select de emoción
       emociones: [
         { value: null, text: "Elige..." },
         { value: 'HAPPY', text: "Feliz" },
@@ -169,6 +186,7 @@ export default {
         { value: 'ANGRY', text: "Enojado" }
       ],
       
+      //Variables usadas por el reproductor
       responsive: "embed-responsive-item",
       ancho: "100%",
       alto: "400",
@@ -187,7 +205,18 @@ export default {
     };
   },
 
-  methods: {
+methods: {
+
+    //Disminuye una variable hasta 0 - Metodo recuperado de la Api de Bootstrap-Vue
+    countDownChanged(dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
+      },
+    
+    //Muestra una Alerta que desaparece en determinado tiempo - Metodo recuperado de la Api de Bootstrap-Vue
+    showAlert() {
+        this.dismissCountDown = this.dismissSecs
+      },
+    //end 
 
     generarRecomedaciones(response){
               let aleatorio = Math.round(Math.random()* (response.data.length - 1))
@@ -244,6 +273,21 @@ export default {
                 video_type:response.data[aleatorio].video_type,
                 predicted_moods: response.data[aleatorio].predicted_moods,}
     },
+
+    //Genera una alerta, tipo 1 = success, tipo 2 = warning. Cambia el mensaje entre tipos
+    generarAlerta(tipo) {
+      if(tipo == 1 ){
+        this.mensaje = "Las recomendaciones se generaron con exito.",
+        this.tipoAlerta = "success"
+      } else if(tipo == 2){
+        this.mensaje = "No se han encontrado datos que coincidan con su búsqueda.",
+        this.tipoAlerta = "warning"
+      } else {
+        this.mensaje = "Ingrese algún parametro para poder generar recomendaciones.",
+        this.tipoAlerta = "info"
+      }
+      this.showAlert()
+    },
     
     onSubmit(evt) {
       evt.preventDefault();
@@ -264,57 +308,138 @@ export default {
             .get(path, { responseType: "json" })
             .then(response => {
               this.generarRecomedaciones(response)
+              this.generarAlerta(1)
               })
             .catch(error => {
               console.log("001R-->" + error);
+
             });
           })
           .catch(error => {
+            this.generarAlerta(2)
             console.log("001B-->" + error);
           });
-
       } else if (this.selectGenero == null && this.selectEmocion != null && this.inputVariable == null) {
-        
-        alert("Recomendaciones basadas en la emoción:" + this.selectEmocion)
-          var path = `http://localhost:8000/api/v2/songs-mood/${this.selectEmocion}/`;
+          //Consulta para recomendaciones
+          path = `http://localhost:8000/api/v2/songs-mood/${this.selectEmocion}/`;
           axios
             .get(path, { responseType: "json" })
             .then(response => {
-              this.respuesta = response.data
-
-              var aleatorio = Math.round(Math.random()* (respuesta.length - 1))
-
-              this.recomendacion1 =  this.respuesta[0].video_id
-              this.recomendacion2 =  this.respuesta[1].video_id
-              this.recomendacion3 =  this.respuesta[2].video_id
-              this.recomendacion4 =  this.respuesta[3].video_id
-              this.recomendacion5 =  this.respuesta[4].video_id
-
-              this.nombre1 = this.respuesta[0].video_title
-              this.nombre2 = this.respuesta[1].video_title
-              this.nombre3 = this.respuesta[2].video_title
-              this.nombre4 = this.respuesta[3].video_title
-              this.nombre5 = this.respuesta[4].video_title
+              this.generarRecomedaciones(response)
+              this.generarAlerta(1)
               })
             .catch(error => {
-              console.log("010R*************************** -->" + error + "<--*****************************");
+              this.generarAlerta(2)
+              console.log("010R-->" + error);
+            });
+      } else if (this.selectGenero == null && this.selectEmocion != null && this.inputVariable != null) {
+          path = `http://localhost:8000/api/v2/songs-name-mood/${this.inputVariable}/${this.selectEmocion}/`;
+          axios
+            .get(path, { responseType: "json" })
+            .then(response => {
+              this.respuesta = response.data;
+              this.video = this.respuesta[0].video_id;
+
+            //Consulta para recomendaciones
+            path = `http://localhost:8000/api/v2/songs-mood/${this.respuesta[0].predicted_moods}/`;
+            axios
+              .get(path, { responseType: "json" })
+              .then(response => {
+                this.generarRecomedaciones(response)
+                this.generarAlerta(1)
+                })
+              .catch(error => {
+                console.log("011R-->" + error);
+              });
+            })
+            .catch(error => {
+              this.generarAlerta(2)
+              console.log("011B-->" + error);
             });
 
-      } else if (this.selectGenero == null && this.selectEmocion != null && this.inputVariable != null) {
-
       } else if (this.selectGenero != null && this.selectEmocion == null && this.inputVariable == null) {
-
+        //Consulta para recomendaciones
+          path = `http://localhost:8000/api/v2/songs-genre/${this.selectGenero}/`;
+          axios
+            .get(path, { responseType: "json" })
+            .then(response => {
+              this.generarRecomedaciones(response)
+              this.generarAlerta(1)
+              })
+            .catch(error => {
+              this.generarAlerta(2)
+              console.log("100R-->" + error);
+            });
       } else if (this.selectGenero != null && this.selectEmocion == null && this.inputVariable != null) {
+        path = `http://localhost:8000/api/v2/songs-name-genre/${this.inputVariable}/${this.selectGenero}/`;
+          axios
+            .get(path, { responseType: "json" })
+            .then(response => {
+              this.respuesta = response.data;
+              this.video = this.respuesta[0].video_id;
 
-      } else if (this.selectGenero == null && this.selectEmocion == null && this.inputVariable != null) {
+            //Consulta para recomendaciones
+            path = `http://localhost:8000/api/v2/songs-mood/${this.respuesta[0].predicted_moods}/`;
+            axios
+              .get(path, { responseType: "json" })
+              .then(response => {
+                this.generarRecomedaciones(response)
+                this.generarAlerta(1)
+                })
+              .catch(error => {
+                console.log("011R-->" + error);
+              });
+            })
+            .catch(error => {
+              this.generarAlerta(2)
+              console.log("011B-->" + error);
+            });
+
+      } else if (this.selectGenero != null && this.selectEmocion != null && this.inputVariable == null) {
+            //Consulta para recomendaciones
+            path = `http://localhost:8000/api/v2/songs-genre-mood/${this.selectGenero}/${this.selectEmocion}/`;
+            axios
+              .get(path, { responseType: "json" })
+              .then(response => {
+                this.generarRecomedaciones(response)
+                this.generarAlerta(1)
+                })
+            .catch(error => {
+              this.generarAlerta(2)
+              console.log("110R-->" + error);
+            });
+
+      } else if (this.selectGenero != null && this.selectEmocion != null && this.inputVariable != null) {
+          path = `http://localhost:8000/api/v2/songs-name-mood-genre/${this.inputVariable}/${this.selectEmocion}/${this.selectGenero}/`;
+          axios
+            .get(path, { responseType: "json" })
+            .then(response => {
+              this.respuesta = response.data;
+              this.video = this.respuesta[0].video_id;
+
+            //Consulta para recomendaciones
+            path = `http://localhost:8000/api/v2/songs-mood/${this.respuesta[0].predicted_moods}/`;
+            axios
+              .get(path, { responseType: "json" })
+              .then(response => {
+                this.generarRecomedaciones(response)
+                this.generarAlerta(1)
+                })
+              .catch(error => {
+                console.log("111R-->" + error);
+              });
+            })
+            .catch(error => {
+              this.generarAlerta(2)
+              console.log("111B-->" + error);
+            });
 
       } else {
-
-      };
-
+        this.generarAlerta(3)
+       };
     }
   }
-};
+}
 </script>
 
 <style lang="css" scoped>

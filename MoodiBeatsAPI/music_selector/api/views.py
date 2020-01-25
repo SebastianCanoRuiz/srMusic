@@ -25,11 +25,27 @@ def getMoodData(*args, **kwargs):
     '''
     #numberMood = switch(kwargs.get('mood'))
     mood = kwargs.get('mood')
-    queryset = NewVideo.objects.filter(predicted_moods__iexact=mood)
+    queryset = NewVideo.objects.filter(labeled__exact=True).filter(predicted_moods__iexact=mood)
     data = list(queryset.values("video_id", "video_title", "predicted_moods", "video_type"))
     return JsonResponse(data, safe=False)
 
-def getMoodGenreData(*args, **kwargs):
+def getGenreData(*args, **kwargs):
+    '''La función se encarga de realizar una consulta a la DB y extraer
+    elementos que pertenezcan al mismo género musical.
+
+    Args:
+        *args: Es una tupla de parámetros posicionales
+        **kwargs: Es un diccionario de parametros con nombre
+        
+    Returns:
+        Json:Con los valore ya filtrados.
+    '''
+    genre = kwargs.get('genre')
+    queryset = NewVideo.objects.filter(labeled__exact=True).filter(video_type__iexact=genre)
+    data = list(queryset.values('video_id', 'video_title', 'predicted_moods', "video_type"))
+    return JsonResponse(data, safe=False)
+
+def getGenreMoodData(*args, **kwargs):
     '''La función se encarga de realizar una consulya a la DB y extraer
     elementos que cumplan com una emocion y género determinado.
 
@@ -43,7 +59,7 @@ def getMoodGenreData(*args, **kwargs):
     #numberMood = switch(kwargs.get('mood'))
     mood = kwargs.get('mood')
     genero = kwargs.get('genre')
-    queryset = NewVideo.objects.filter(predicted_moods__iexact=mood).filter(video_type__iexact=genero)
+    queryset = NewVideo.objects.filter(labeled__exact=True).filter(predicted_moods__iexact=mood).filter(video_type__iexact=genero)
     data = list(queryset.values('video_id', 'video_title', 'predicted_moods', "video_type"))
     return JsonResponse(data, safe=False)
 
@@ -59,6 +75,61 @@ def getNameData(*args, **kwargs):
         Json:Con los valore ya filtrados.
     '''
     name = kwargs.get('name')
-    queryset = NewVideo.objects.filter(video_title__icontains=name)
+    queryset = NewVideo.objects.filter(labeled__exact=True).filter(video_title__icontains=name)
+    data = list(queryset.values('video_id', 'video_title', 'predicted_moods', "video_type"))
+    return JsonResponse(data, safe=False)
+
+def getNameGenreData(*args, **kwargs):
+    '''La función se encarga de realizar una consulta a la DB y extraer
+    elementos que cumplan o contengan parte del nombre que se le pasa por parámetro y que
+    pertenezcan al mismo género de la canción.
+
+    Args:
+        *args: Es una tupla de parámetros posicionales
+        **kwargs: Es un diccionario de parametros con nombre
+        
+    Returns:
+        Json:Con los valore ya filtrados.
+    '''
+    name = kwargs.get('name')
+    genre = kwargs.get('genre')
+    queryset = NewVideo.objects.filter(labeled__exact=True).filter(video_title__icontains=name).filter(video_type__iexact=genre)
+    data = list(queryset.values('video_id', 'video_title', 'predicted_moods', "video_type"))
+    return JsonResponse(data, safe=False)
+
+def getNameMoodData(*args, **kwargs):
+    '''La función se encarga de realizar una consulta a la DB y extraer
+    elementos que cumplan o contengan parte del nombre que se le pasa por parámetro y que
+    evoquen la misma emoción de la canción.
+
+    Args:
+        *args: Es una tupla de parámetros posicionales
+        **kwargs: Es un diccionario de parametros con nombre
+        
+    Returns:
+        Json:Con los valore ya filtrados.
+    '''
+    name = kwargs.get('name')
+    mood = kwargs.get('mood')
+    queryset = NewVideo.objects.filter(labeled__exact=True).filter(video_title__icontains=name).filter(predicted_moods__iexact=mood)
+    data = list(queryset.values('video_id', 'video_title', 'predicted_moods', "video_type"))
+    return JsonResponse(data, safe=False)
+
+def getNameMoodGenreData(*args, **kwargs):
+    '''La función se encarga de realizar una consulta a la DB y extraer
+    elementos que cumplan o contengan parte del nombre que se le pasa por parámetro y que
+    evoquen la misma emoción de la canción.
+
+    Args:
+        *args: Es una tupla de parámetros posicionales
+        **kwargs: Es un diccionario de parametros con nombre
+        
+    Returns:
+        Json:Con los valore ya filtrados.
+    '''
+    name = kwargs.get('name')
+    mood = kwargs.get('mood')
+    genre = kwargs.get('genre')
+    queryset = NewVideo.objects.filter(labeled__exact=True).filter(predicted_moods__iexact=mood).filter(video_type__iexact=genre).filter(video_title__icontains=name)
     data = list(queryset.values('video_id', 'video_title', 'predicted_moods', "video_type"))
     return JsonResponse(data, safe=False)

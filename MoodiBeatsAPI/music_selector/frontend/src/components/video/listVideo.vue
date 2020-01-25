@@ -2,15 +2,19 @@
     <div class="container">
         <div class="row">
             <div class="col text-left">
-                <h2>Listado de Videos</h2>
+                <br>
+                <br>
+                <br>
+                <h1 align="center">Listado con todos los video musicales almacenados en la DB</h1>
+                <br>
+                <br>
+                <br>
 
                 <div class="col-md-12">
-                    <b-table striped hover :items="videos" :fields="fields">
+                    <b-table striped hover :items="videos" :fields="fields" >
                     </b-table>
                 </div>
-
             </div>
-
         </div>
     </div>
 </template>
@@ -22,10 +26,12 @@ export default {
     data () {
         return {
             fields: [
+                { key: 'video_id', label: 'Id' },
                 { key: 'video_title', label:'Título' },
-                { key: 'video_id', label: 'ID' },
+                { key: 'video_type', label: 'Género' },
                 { key: 'moods', label: 'Emoción Etiquetada' },
                 { key: 'predicted_moods', label: 'Emoción Recomendada' },
+                { key: 'labeled', label: 'Etiqueta' },
             ],
         
             videos: []

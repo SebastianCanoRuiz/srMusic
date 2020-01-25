@@ -4,21 +4,24 @@
       <nav class="nav">
         <div class="container">
           <div class="logo">
-            <a href="#">
-              <b-icon icon="music-player-fill" variant="success"></b-icon>
+            <a href="./">
+              <b-icon icon="music-player-fill" variant="ligth"></b-icon>
               <strong>SR-Musical</strong>
             </a>
           </div>
           <div id="mainListDiv" class="main_list">
             <ul class="navlinks">
               <li>
-                <a href="#">Acerca de</a>
+                <a href="">    
+                  <b-icon icon="info" variant="ligth"></b-icon>
+                  <strong>Info</strong>
+                </a>
               </li>
-              <li>
-                <a href="#">Sobre Nosotros</a>
-              </li>
-              <li>
-                <a href="#">Contacto</a>
+              <li>      
+                <a href="./video">    
+                  <b-icon icon="documents" variant="ligth"></b-icon>
+                  <strong>List DB</strong>
+                </a>
               </li>
             </ul>
           </div>
@@ -43,7 +46,7 @@ const $ = require("jquery");
 $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
     $(".nav").addClass("affix");
-    console.log("OK");
+    //console.log("OK - Scroll");
   } else {
     $(".nav").removeClass("affix");
   }
@@ -51,7 +54,7 @@ $(window).scroll(function() {
 
 $(".navTrigger").click(function() {
   $(this).toggleClass("active");
-  console.log("Clicked menu");
+  //console.log("Clicked menu");
   $("#mainListDiv").toggleClass("show_list");
   $("#mainListDiv").fadeIn();
 });
@@ -107,7 +110,7 @@ body {
 }
 
 .nav div.logo a:hover {
-  color: #00e676;
+  color: #E7AE18 ;
 }
 
 .nav div.main_list {
@@ -147,8 +150,7 @@ body {
 .home {
   width: 100%;
   height: 100vh;
-  background-image: url(https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
-  /*background-image: url(https://images.unsplash.com/photo-1498550744921-75f79806b8a7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b0f6908fa5e81286213c7211276e6b3d&auto=format&fit=crop&w=1500&q=80);*/
+  background-image: url("assets/fondo1.jpg");
   background-position: center top;
   background-size: cover;
 }
