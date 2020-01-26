@@ -1,6 +1,7 @@
 asgiref==3.2.3
 astroid==2.3.3
 attrs==19.3.0
+autopep8==1.5
 auxlib==0.0.43
 backcall==0.1.0
 bleach==3.1.0
@@ -50,8 +51,11 @@ prompt-toolkit==2.0.10
 psycopg2==2.8.4
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
+pycodestyle==2.5.0
 Pygments==2.5.2
 pylint==2.4.4
+pylint-django==2.0.13
+pylint-plugin-utils==0.6
 pyrsistent==0.15.7
 python-dateutil==2.8.1
 python-dotenv==0.10.3
@@ -65,7 +69,7 @@ rsa==4.0
 scikit-learn==0.22.1
 scipy==1.4.1
 Send2Trash==1.5.0
-six==1.13.0
+six==1.14.0
 sqlparse==0.3.0
 terminado==0.8.3
 testpath==0.4.4
@@ -73,7 +77,7 @@ tornado==6.0.3
 traitlets==4.3.3
 typed-ast==1.4.1
 uritemplate==3.0.1
-urllib3==1.25.7
+urllib3==1.25.8
 wcwidth==0.1.8
 webencodings==0.5.1
 widgetsnbextension==3.5.1

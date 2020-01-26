@@ -8,7 +8,7 @@ from rest_framework import viewsets
 from django.http import JsonResponse
 
 class NewVideoAPIView(generics.ListCreateAPIView):
-    #Clase que se encraga de retornar todos lo elementos por medio del serializcer
+    """Clase que se encarga de retornar todos los elementos de la DB por medio del serialicer"""
     queryset = NewVideo.objects.all()
     serializer_class = NewVideoSerializer
 

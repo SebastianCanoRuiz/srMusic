@@ -1,7 +1,7 @@
 from django.db import models
 
-# Create your models here.
 class NewVideo(models.Model):
+	"""Modelo que permite hacer la conexión con la base de datos posgrestsql"""
 	MOOD_CHOICES = (
 	('HAPPY', 'Happy'),
 	('IN-LOVE', 'In-Love'),
@@ -20,5 +20,3 @@ class NewVideo(models.Model):
 
 	def __str__(self):
 		return self.video_title
-
-

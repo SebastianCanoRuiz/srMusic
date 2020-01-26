@@ -6,19 +6,24 @@
           <div class="logo">
             <a href="./">
               <b-icon icon="music-player-fill" variant="ligth"></b-icon>
-              <strong>SR-Musical</strong>
+              <strong>APOLO</strong>
             </a>
           </div>
           <div id="mainListDiv" class="main_list">
             <ul class="navlinks">
               <li>
-                <a href="">    
+                <a class="nav-link nav-social" href="#">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a href>
                   <b-icon icon="info" variant="ligth"></b-icon>
                   <strong>Info</strong>
                 </a>
               </li>
-              <li>      
-                <a href="./video">    
+              <li>
+                <a href="./video">
                   <b-icon icon="documents" variant="ligth"></b-icon>
                   <strong>List DB</strong>
                 </a>
@@ -33,25 +38,78 @@
         </div>
       </nav>
 
-      <section class="home"></section>
-      <div style="height: 1000px">
-        <router-view />
+      <section class="home">
+        <br>
+        <div clas="mt-4">
+          <div class="inner cover">
+            <h1 class="cover-heading" font-scale="7">La aventura musical Inicia</h1>
+            <p class="lead cover-copy">
+            El Prototipo del Sistema de Recomendación Musical <strong>APOLO</strong> te recomienda música basada en tus emociones
+            Apolo se preocupa por cómo te sientes.
+            <br>
+            Más de 1000 videos musicales libres de derechos de autor de YouTube. 
+            <br>
+            Disfrútalo :3
+            </p>
+            <br>
+            <p class="lead">
+              <a href="#contenido">                   
+              <button type="button" class="btn btn-lg btn-default btn-notify">Adelante!</button>
+              </a>
+            </p>
+          </div>
+          <div>
+            <div class="mastfoot">
+              <div class="inner">
+                <p>
+                  &copy; Prototipo SR-Musical Apolo. Diseñado por:<br>
+                  <a href="" target="_blank" style="color:#fff">Jhon Sebastian Cano Ruiz & Johan Steeven Sanchez Sepúlveda</a>.
+                  <br>
+                  2020
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="contenido" name="contenido" style="height: 1000px">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div>
+          <router-view />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+//Se inporta JQuery
 const $ = require("jquery");
+
+$('nav a').click(function(e){				
+		e.preventDefault();		//evitar el eventos del enlace normal
+		var strAncla=$(this).attr('href'); //id del ancla
+			$('body,html').stop(true,true).animate({				
+				scrollTop: $(strAncla).offset().top
+			},1000);
+	});
+
+//controla el scroll
 $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
     $(".nav").addClass("affix");
-    //console.log("OK - Scroll");
   } else {
     $(".nav").removeClass("affix");
   }
 });
 
+//para el caso del menú de dispositivos móviles
 $(".navTrigger").click(function() {
   $(this).toggleClass("active");
   //console.log("Clicked menu");
@@ -73,6 +131,68 @@ export default {
   color: #2c3e50;
   margin-top: 0px;
 }
+
+#contenido {
+  margin-top: 4em;
+}
+
+/* Seccion intemedia */
+.inner {
+  padding: 30px;
+}
+
+.cover {
+  padding: 0 20px;
+  margin-top: 16em;
+}
+
+.cover-heading {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  font-size: 7rem;
+  color: #fff;
+  margin-bottom: 7rem;
+  /**Sombras */
+  text-shadow: 0px 0px 15px #f2f;
+}
+
+.cover-copy {
+  font-size: 2rem;
+  color: white;
+
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  /**Sombras */
+text-shadow: 4px 3px 2px #000;
+}
+
+.mastfoot {
+  color: #999;
+  /* IE8 proofing */
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 3em;
+}
+.nav-masthead .nav-link {
+  display: inline-block;
+}
+
+/* Custom default button */
+.btn-default {
+  color: #fff;
+    font-size: 3rem;
+  text-shadow: none;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  padding: 0.5rem 2rem;
+}
+
+.btn-default:hover,
+.btn-default:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+/** End seccion intermedia */
 
 @import url("assets/fondo.jpg");
 html,
@@ -110,7 +230,7 @@ body {
 }
 
 .nav div.logo a:hover {
-  color: #E7AE18 ;
+  color: #e7ae18;
 }
 
 .nav div.main_list {
@@ -217,7 +337,6 @@ body {
 }
 
 /* Animation */
-/* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */
 
 .navTrigger {
   cursor: pointer;

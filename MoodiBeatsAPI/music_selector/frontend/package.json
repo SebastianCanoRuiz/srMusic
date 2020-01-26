@@ -15,7 +15,9 @@
     "bootstrap-vue": "^2.2.1",
     "jquery": "^3.4.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuese": "^1.4.7",
+    "yarn": "^1.21.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

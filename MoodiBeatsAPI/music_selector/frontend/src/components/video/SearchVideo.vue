@@ -7,11 +7,13 @@
 			<div class="col-md-12">
 				<div id="yt" align="center">
 
+        <!-- Video reproductor principal -->
 					<iframe :class="responsive" :width="ancho" :height="alto" :src="url + video"
 					  showinfo=0 controls=1 :frameborder="borde" :allowfullscreen="pcompleta">
 					</iframe>
                     <br>
                     <hr>
+            <!-- Alerta ooculta   -->
                     <b-alert
                         id="alert"
                         :show="dismissCountDown"
@@ -21,7 +23,7 @@
                         @dismiss-count-down="countDownChanged">
                         <strong>{{ mensaje }}</strong>
                     </b-alert>
-                    <!-- ************************************************************************************ -->
+<!-- ****************************Opciones de búsqueda******************************************************** -->
                     <div >
                         <b-form inline @submit="onSubmit" > 
 
@@ -50,7 +52,7 @@
                                     <b-button class="form-control my-2 w-25" type="submit" > Buscar </b-button>
                                     </b-form>
                         </div>
-<!-- ************************************************************************************ -->
+<!-- ******************************* Variables de prueba ***************************************************** -->
 					<!-- <p style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 						<strong>El ID del video actual es: </strong> {{ video }}
             <br>
@@ -67,10 +69,11 @@
 		</div>
     <hr style="color: #0056b2;" />
 <!-- ************************************** RECOMENDACIONES ******************************************************** -->
-		<br>
+	<div class="row" :class="visibilidad">	
+        <br>
     <h1>Basado en tu búsqueda y video musical actual te recomendamos los siguientes: </h1>
     <br>
-		<div class="row" :class="visibilidad">
+
 
 			<div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
           <!-- <strong>ID:</strong> {{ recomendacion1.video_id }} -->
@@ -211,7 +214,7 @@ export default {
       borde: "1",
       pcompleta: null,
 
-      //VARIABLES CON LOS DATOS DE LAS RECOMENDACIONES
+      //Variables con los dotos de las recomendaciones
       recomendacion1: [],
       recomendacion2: [],
       recomendacion3: [],
@@ -228,14 +231,16 @@ methods: {
         this.dismissCountDown = dismissCountDown
       },
     
-    //Muestra una Alerta que desaparece en determinado tiempo - Metodo recuperado de la Api de Bootstrap-Vue
+    /**Muestra una Alerta que desaparece en determinado tiempo - Metodo recuperado de la Api de Bootstrap-Vue*/
     showAlert() {
         this.dismissCountDown = this.dismissSecs
       },
     //end 
 
-    /** Genera 6 recomendaciones aleatorias basadas en la emocion de la canción en reproducción */
+    /** Genera 6 recomendaciones aleatorias basadas en la emocion de la canción en reproducción 
+        recive un response con el reultado de una consulta http*/
     generarRecomedaciones(response){
+              //Número aleatorio que permite escoger una recomendación aleatoria dentro del json filtrado
               let aleatorio = Math.round(Math.random()* (response.data.length - 1))
               //console.log("Numero Aleatorio-->" + aleatorio)
               
@@ -291,7 +296,10 @@ methods: {
                 predicted_moods: response.data[aleatorio].predicted_moods,}
     },
 
-    /**Genera una alerta, tipo 1 = success, tipo 2 = warning. Cambia el mensaje entre tipos*/
+    /**Genera una alerta
+     * Args:
+     *      tipo= 1,2,3 (success, warning, info), cambia el mensaje entre los tipos
+     * */
     generarAlerta(tipo) {
       if(tipo == 1 ){
         this.mensaje = "Las recomendaciones se generaron con exito.",
@@ -306,8 +314,16 @@ methods: {
       this.showAlert()
     },
     
+    /**
+     * Utilizado para reproducir en el reproductor principal algún video
+     * musical y generar recomendaciones basadas en el mismo
+     * 
+     * Args:
+     *      evt: Evento de click
+     *      recomendacion: array de datos con los atributos de la cancion
+     */
     reproducirRecomendacion(evt, recomendacion){
-      evt.preventDefault()
+      evt.preventDefault() 
 
       this.video = recomendacion.video_id
       //Consulta para recomendaciones
@@ -324,7 +340,8 @@ methods: {
             });
     },
 
-    /*Se invoca cuando se da clic en el botón buscar, analiza 7 casos posibles de busqueda según los 
+/**
+ * Se invoca cuando se da clic en el botón buscar, analiza 7 casos posibles de busqueda según los 
     parámetros dde entrada (genero, emocion, nombre). Viendo los casos como 1 y 0 cuando tienen o no
     algún dato, se pueden encontrar los siguientesa:
     0 0 0   -->   Caso sin uso debido a que no aporta información para la búsqueda
@@ -335,10 +352,13 @@ methods: {
     1 0 1   -->   Se genera búsqueda y recomendaciones
     1 1 0   -->   Se genera recomendaciones
     1 1 1   -->   Caso de uso muy específico que no permite generar recomendaciones adecuadas
-    */
+
+    Args:
+          evt: evento submit del boton "buscar"
+ */
     onSubmit(evt) {
-      evt.preventDefault();
-      this.visibilidad = "d-flex"
+      evt.preventDefault();             //Evita que la pagina se recargue
+      this.visibilidad = "d-flex"       //Muestra la sección de recomendaciones
       var path = ``;
 
       if (this.selectGenero == null && this.selectEmocion == null && this.inputVariable != null) {
@@ -469,8 +489,4 @@ methods: {
 </script>
 
 <style lang="css" scoped>
-.oculto {
-  visibility: video;
-}
-
 </style>

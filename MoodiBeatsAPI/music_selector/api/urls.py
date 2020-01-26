@@ -2,6 +2,7 @@
 from django.conf.urls import url
 from .views import NewVideoAPIView, getMoodData, getGenreData, getGenreMoodData, getNameData, getNameMoodData, getNameGenreData, getNameMoodGenreData
 
+#Contiene las urls de consulta para la API
 urlpatterns = [
  url(r'^new-videos/$', NewVideoAPIView.as_view()),
  url(r'^songs-mood/(?P<mood>[^/]+)/$', getMoodData),

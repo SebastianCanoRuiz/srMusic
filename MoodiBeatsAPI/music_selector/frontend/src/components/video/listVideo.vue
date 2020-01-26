@@ -9,7 +9,6 @@
                 <br>
                 <br>
                 <br>
-
                 <div class="col-md-12">
                     <b-table striped hover :items="videos" :fields="fields" >
                     </b-table>
@@ -38,6 +37,10 @@ export default {
         }
     },
     methods: {
+
+        /**
+         * Permite obtener un json con todos los datos que existen en a DB
+         */
         getVideos () {
             const path = 'http://localhost:8000/api/v2/new-videos/'
             axios.get(path).then((response) => {
@@ -49,6 +52,9 @@ export default {
         }
     },
 
+    /**
+     * Ejecuta el metodo getVideos() de inmiediato
+     */
     created(){
         this.getVideos()
     }
