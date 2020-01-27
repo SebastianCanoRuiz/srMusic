@@ -70,11 +70,9 @@
     <hr style="color: #0056b2;" />
 <!-- ************************************** RECOMENDACIONES ******************************************************** -->
 	<div class="row" :class="visibilidad">	
-        <br>
-    <h1>Basado en tu búsqueda y video musical actual te recomendamos los siguientes: </h1>
     <br>
-
-
+    <h1>Basado en tu búsqueda y video musical actual te recomendamos los siguientes:</h1>
+    <br>
 			<div class="col-md-6" style="padding-left: 5px;padding-right: 5px;">
           <!-- <strong>ID:</strong> {{ recomendacion1.video_id }} -->
           <br>
@@ -148,9 +146,7 @@
 				</iframe>
 			</div>
 		</div>
-
-		<hr style="border: 1px dashed #999;">
-
+		<hr>
 		<footer align="center">
 			<p>Desarrollado por <a href="#" target="_blank">Jhon Sebastian Cano Ruiz - Johan Steeven Sanchez Sepúlveda</a></p>
       <p align="center">2020</p>
@@ -179,8 +175,9 @@ export default {
       selectGenero: null,
       inputVariable: null,
 
-      //Variable para guardar el reponse de la peticion get http
-      respuesta: [],
+      //Variable para guardar el response Data de la peticion get http
+      respuesta: [],      
+      
       //Variable con todos los generos que se tiene, usado por el select de genero
       generos: [
         { value: null, text: "Elige..." },
@@ -194,17 +191,17 @@ export default {
         { value: "VALLENATO", text: "Vallenato" },
         { value: "REGGAE", text: "Reggae" },
         { value: "RAP", text: "Rap" },
-        { value: "METAL", text: "Metal" },
+        { value: "METAL", text: "Metal" }
       ],
       //Variable con todos las emociones que se tienen, usado por el select de emoción
       emociones: [
         { value: null, text: "Elige..." },
-        { value: 'HAPPY', text: "Feliz" },
-        { value: 'IN-LOVE', text: "Enamorado" },
-        { value: 'SAD', text: "Triste" },
-        { value: 'ANGRY', text: "Enojado" }
+        { value: "HAPPY", text: "Feliz" },
+        { value: "IN-LOVE", text: "Enamorado" },
+        { value: "SAD", text: "Triste" },
+        { value: "ANGRY", text: "Enojado" }
       ],
-      
+
       //Variables usadas por el reproductor
       responsive: "embed-responsive-item",
       ancho: "100%",
@@ -220,80 +217,86 @@ export default {
       recomendacion3: [],
       recomendacion4: [],
       recomendacion5: [],
-      recomendacion6: [],
+      recomendacion6: []
     };
   },
 
-methods: {
-
+  methods: {
     /** Disminuye una variable hasta 0 - Metodo recuperado de la Api de Bootstrap-Vue */
     countDownChanged(dismissCountDown) {
-        this.dismissCountDown = dismissCountDown
-      },
-    
+      this.dismissCountDown = dismissCountDown;
+    },
+
     /**Muestra una Alerta que desaparece en determinado tiempo - Metodo recuperado de la Api de Bootstrap-Vue*/
     showAlert() {
-        this.dismissCountDown = this.dismissSecs
-      },
-    //end 
+      this.dismissCountDown = this.dismissSecs;
+    },
+    //end
 
     /** Genera 6 recomendaciones aleatorias basadas en la emocion de la canción en reproducción 
         recive un response con el reultado de una consulta http*/
-    generarRecomedaciones(response){
-              //Número aleatorio que permite escoger una recomendación aleatoria dentro del json filtrado
-              let aleatorio = Math.round(Math.random()* (response.data.length - 1))
-              //console.log("Numero Aleatorio-->" + aleatorio)
-              
-              this.recomendacion1 = {
-                video_id:response.data[aleatorio].video_id, 
-                video_title:response.data[aleatorio].video_title, 
-                video_type:response.data[aleatorio].video_type,
-                predicted_moods: response.data[aleatorio].predicted_moods,}
-              
-              aleatorio = Math.round(Math.random()* (response.data.length - 1))
-              //console.log("Numero Aleatorio-->" + aleatorio)
-              
-              this.recomendacion2 = {
-                video_id:response.data[aleatorio].video_id, 
-                video_title:response.data[aleatorio].video_title, 
-                video_type:response.data[aleatorio].video_type,
-                predicted_moods: response.data[aleatorio].predicted_moods,}
+    generarRecomedaciones(response) {
 
-              aleatorio = Math.round(Math.random()* (response.data.length - 1))
-              //console.log("Numero Aleatorio-->" + aleatorio)
+      //Número aleatorio que permite escoger una recomendación aleatoria dentro del json filtrado
+      let aleatorio = Math.round(Math.random() * (response.data.length - 1));
+      //console.log("Numero Aleatorio-->" + aleatorio)
 
-              this.recomendacion3 = {
-                video_id:response.data[aleatorio].video_id, 
-                video_title:response.data[aleatorio].video_title, 
-                video_type:response.data[aleatorio].video_type,
-                predicted_moods: response.data[aleatorio].predicted_moods,}
+      this.recomendacion1 = {
+        video_id: response.data[aleatorio].video_id,
+        video_title: response.data[aleatorio].video_title,
+        video_type: response.data[aleatorio].video_type,
+        predicted_moods: response.data[aleatorio].predicted_moods
+      };
 
-              aleatorio = Math.round(Math.random()* (response.data.length - 1))
-              //console.log("Numero Aleatorio-->" + aleatorio)
+      aleatorio = Math.round(Math.random() * (response.data.length - 1));
+      //console.log("Numero Aleatorio-->" + aleatorio)
 
-              this.recomendacion4 = {
-                video_id:response.data[aleatorio].video_id, 
-                video_title:response.data[aleatorio].video_title, 
-                video_type:response.data[aleatorio].video_type,
-                predicted_moods: response.data[aleatorio].predicted_moods,}
+      this.recomendacion2 = {
+        video_id: response.data[aleatorio].video_id,
+        video_title: response.data[aleatorio].video_title,
+        video_type: response.data[aleatorio].video_type,
+        predicted_moods: response.data[aleatorio].predicted_moods
+      };
 
-              aleatorio = Math.round(Math.random()* (response.data.length - 1))
-              //console.log("Numero Aleatorio-->" + aleatorio)
+      aleatorio = Math.round(Math.random() * (response.data.length - 1));
+      //console.log("Numero Aleatorio-->" + aleatorio)
 
-              this.recomendacion5 = {
-                video_id:response.data[aleatorio].video_id, 
-                video_title:response.data[aleatorio].video_title, 
-                video_type:response.data[aleatorio].video_type,
-                predicted_moods: response.data[aleatorio].predicted_moods,}
+      this.recomendacion3 = {
+        video_id: response.data[aleatorio].video_id,
+        video_title: response.data[aleatorio].video_title,
+        video_type: response.data[aleatorio].video_type,
+        predicted_moods: response.data[aleatorio].predicted_moods
+      };
 
-              aleatorio = Math.round(Math.random()* (response.data.length - 1))
-              //console.log("Numero Aleatorio-->" + aleatorio)
+      aleatorio = Math.round(Math.random() * (response.data.length - 1));
+      //console.log("Numero Aleatorio-->" + aleatorio)
 
-              this.recomendacion6 = {
-                video_id:response.data[aleatorio].video_id, 
-                video_title:response.data[aleatorio].video_title, 
-                video_type:response.data[aleatorio].video_type,
-                predicted_moods: response.data[aleatorio].predicted_moods,}
+      this.recomendacion4 = {
+        video_id: response.data[aleatorio].video_id,
+        video_title: response.data[aleatorio].video_title,
+        video_type: response.data[aleatorio].video_type,
+        predicted_moods: response.data[aleatorio].predicted_moods
+      };
+
+      aleatorio = Math.round(Math.random() * (response.data.length - 1));
+      //console.log("Numero Aleatorio-->" + aleatorio)
+
+      this.recomendacion5 = {
+        video_id: response.data[aleatorio].video_id,
+        video_title: response.data[aleatorio].video_title,
+        video_type: response.data[aleatorio].video_type,
+        predicted_moods: response.data[aleatorio].predicted_moods
+      };
+
+      aleatorio = Math.round(Math.random() * (response.data.length - 1));
+      //console.log("Numero Aleatorio-->" + aleatorio)
+
+      this.recomendacion6 = {
+        video_id: response.data[aleatorio].video_id,
+        video_title: response.data[aleatorio].video_title,
+        video_type: response.data[aleatorio].video_type,
+        predicted_moods: response.data[aleatorio].predicted_moods
+      };
     },
 
     /**Genera una alerta
@@ -301,46 +304,48 @@ methods: {
      *      tipo= 1,2,3 (success, warning, info), cambia el mensaje entre los tipos
      * */
     generarAlerta(tipo) {
-      if(tipo == 1 ){
-        this.mensaje = "Las recomendaciones se generaron con exito.",
-        this.tipoAlerta = "success"
-      } else if(tipo == 2){
-        this.mensaje = "No se han encontrado datos que coincidan con su búsqueda.",
-        this.tipoAlerta = "warning"
+      if (tipo == 1) {
+        (this.mensaje = "Las recomendaciones se generaron con exito."),
+          (this.tipoAlerta = "success");
+      } else if (tipo == 2) {
+        (this.mensaje =
+          "No se han encontrado datos que coincidan con su búsqueda."),
+          (this.tipoAlerta = "warning");
       } else {
-        this.mensaje = "Ingrese algún parametro para poder generar recomendaciones.",
-        this.tipoAlerta = "info"
+        (this.mensaje =
+          "Ingrese algún parametro para poder generar recomendaciones."),
+          (this.tipoAlerta = "info");
       }
-      this.showAlert()
+      this.showAlert();
     },
-    
+
     /**
      * Utilizado para reproducir en el reproductor principal algún video
      * musical y generar recomendaciones basadas en el mismo
-     * 
+     *
      * Args:
      *      evt: Evento de click
      *      recomendacion: array de datos con los atributos de la cancion
      */
-    reproducirRecomendacion(evt, recomendacion){
-      evt.preventDefault() 
+    reproducirRecomendacion(evt, recomendacion) {
+      evt.preventDefault();
 
-      this.video = recomendacion.video_id
+      this.video = recomendacion.video_id;
       //Consulta para recomendaciones
-      var path = `http://localhost:8000/api/v2/songs-mood/${recomendacion.predicted_moods}/`;
-          axios
-            .get(path, { responseType: "json" })
-            .then(response => {
-              this.generarRecomedaciones(response)
-              this.generarAlerta(1)
-              })
-            .catch(error => {
-              this.generarAlerta(2)
-              console.log("010R-->" + error);
-            });
+      var path = `http://localhost:8000/api/v2/songs-genre-mood/${recomendacion.video_type}/${recomendacion.predicted_moods}/`;
+      axios
+        .get(path, { responseType: "json" })
+        .then(response => {
+          this.generarRecomedaciones(response);
+          this.generarAlerta(1);
+        })
+        .catch(error => {
+          this.generarAlerta(2);
+          console.log("010R-->" + error);
+        });
     },
 
-/**
+    /**
  * Se invoca cuando se da clic en el botón buscar, analiza 7 casos posibles de busqueda según los 
     parámetros dde entrada (genero, emocion, nombre). Viendo los casos como 1 y 0 cuando tienen o no
     algún dato, se pueden encontrar los siguientesa:
@@ -357,11 +362,15 @@ methods: {
           evt: evento submit del boton "buscar"
  */
     onSubmit(evt) {
-      evt.preventDefault();             //Evita que la pagina se recargue
-      this.visibilidad = "d-flex"       //Muestra la sección de recomendaciones
+      evt.preventDefault(); //Evita que la pagina se recargue
+      this.visibilidad = "d-flex"; //Muestra la sección de recomendaciones
       var path = ``;
 
-      if (this.selectGenero == null && this.selectEmocion == null && this.inputVariable != null) {
+      if (
+        this.selectGenero == null &&
+        this.selectEmocion == null &&
+        this.inputVariable != null
+      ) {
         //Consulta para recomendaciones
         path = `http://localhost:8000/api/v2/songs-name/${this.inputVariable}`;
         axios
@@ -370,122 +379,141 @@ methods: {
             this.respuesta = response.data;
             this.video = this.respuesta[0].video_id;
 
-          //Consulta para recomendaciones
-          path = `http://localhost:8000/api/v2/songs-mood/${this.respuesta[0].predicted_moods}/`;
-          axios
-            .get(path, { responseType: "json" })
-            .then(response => {
-              this.generarRecomedaciones(response)
-              this.generarAlerta(1)
+            //Consulta para recomendaciones
+            path = `http://localhost:8000/api/v2/songs-genre-mood/${this.respuesta[0].video_type}/${this.respuesta[0].predicted_moods}/`;
+            axios
+              .get(path, { responseType: "json" })
+              .then(response => {
+                this.generarRecomedaciones(response);
+                this.generarAlerta(1);
               })
-            .catch(error => {
-              console.log("001R-->" + error);
-
-            });
+              .catch(error => {
+                console.log("001R-->" + error);
+              });
           })
           .catch(error => {
-            this.generarAlerta(2)
+            this.generarAlerta(2);
             console.log("001B-->" + error);
           });
-      } else if (this.selectGenero == null && this.selectEmocion != null && this.inputVariable == null) {
-          //Consulta para recomendaciones
-          path = `http://localhost:8000/api/v2/songs-mood/${this.selectEmocion}/`;
-          axios
-            .get(path, { responseType: "json" })
-            .then(response => {
-              this.generarRecomedaciones(response)
-              this.generarAlerta(1)
-              })
-            .catch(error => {
-              this.generarAlerta(2)
-              console.log("010R-->" + error);
-            });
-      } else if (this.selectGenero == null && this.selectEmocion != null && this.inputVariable != null) {
-          path = `http://localhost:8000/api/v2/songs-name-mood/${this.inputVariable}/${this.selectEmocion}/`;
-          axios
-            .get(path, { responseType: "json" })
-            .then(response => {
-              this.respuesta = response.data;
-              this.video = this.respuesta[0].video_id;
-
-            //Consulta para recomendaciones
-            path = `http://localhost:8000/api/v2/songs-mood/${this.respuesta[0].predicted_moods}/`;
-            axios
-              .get(path, { responseType: "json" })
-              .then(response => {
-                this.generarRecomedaciones(response)
-                this.generarAlerta(1)
-                })
-              .catch(error => {
-                console.log("011R-->" + error);
-              });
-            })
-            .catch(error => {
-              this.generarAlerta(2)
-              console.log("011B-->" + error);
-            });
-
-      } else if (this.selectGenero != null && this.selectEmocion == null && this.inputVariable == null) {
+      } else if (
+        this.selectGenero == null &&
+        this.selectEmocion != null &&
+        this.inputVariable == null
+      ) {
         //Consulta para recomendaciones
-          path = `http://localhost:8000/api/v2/songs-genre/${this.selectGenero}/`;
-          axios
-            .get(path, { responseType: "json" })
-            .then(response => {
-              this.generarRecomedaciones(response)
-              this.generarAlerta(1)
-              })
-            .catch(error => {
-              this.generarAlerta(2)
-              console.log("100R-->" + error);
-            });
-      } else if (this.selectGenero != null && this.selectEmocion == null && this.inputVariable != null) {
-        path = `http://localhost:8000/api/v2/songs-name-genre/${this.inputVariable}/${this.selectGenero}/`;
-          axios
-            .get(path, { responseType: "json" })
-            .then(response => {
-              this.respuesta = response.data;
-              this.video = this.respuesta[0].video_id;
+        path = `http://localhost:8000/api/v2/songs-mood/${this.selectEmocion}/`;
+        axios
+          .get(path, { responseType: "json" })
+          .then(response => {
+            this.generarRecomedaciones(response);
+            this.generarAlerta(1);
+          })
+          .catch(error => {
+            this.generarAlerta(2);
+            console.log("010R-->" + error);
+          });
+      } else if (
+        this.selectGenero == null &&
+        this.selectEmocion != null &&
+        this.inputVariable != null
+      ) {
+        path = `http://localhost:8000/api/v2/songs-name-mood/${this.inputVariable}/${this.selectEmocion}/`;
+        axios
+          .get(path, { responseType: "json" })
+          .then(response => {
+            this.respuesta = response.data;
+            this.video = this.respuesta[0].video_id;
 
             //Consulta para recomendaciones
-            path = `http://localhost:8000/api/v2/songs-mood/${this.respuesta[0].predicted_moods}/`;
+            path = `http://localhost:8000/api/v2/songs-genre-mood/${this.respuesta[0].video_type}/${this.respuesta[0].predicted_moods}/`;
             axios
               .get(path, { responseType: "json" })
               .then(response => {
-                this.generarRecomedaciones(response)
-                this.generarAlerta(1)
-                })
+                this.generarRecomedaciones(response);
+                this.generarAlerta(1);
+              })
               .catch(error => {
                 console.log("011R-->" + error);
               });
-            })
-            .catch(error => {
-              this.generarAlerta(2)
-              console.log("011B-->" + error);
-            });
+          })
+          .catch(error => {
+            this.generarAlerta(2);
+            console.log("011B-->" + error);
+          });
+      } else if (
+        this.selectGenero != null &&
+        this.selectEmocion == null &&
+        this.inputVariable == null
+      ) {
+        //Consulta para recomendaciones
+        path = `http://localhost:8000/api/v2/songs-genre/${this.selectGenero}/`;
+        axios
+          .get(path, { responseType: "json" })
+          .then(response => {
+            this.generarRecomedaciones(response);
+            this.generarAlerta(1);
+          })
+          .catch(error => {
+            this.generarAlerta(2);
+            console.log("100R-->" + error);
+          });
+      } else if (
+        this.selectGenero != null &&
+        this.selectEmocion == null &&
+        this.inputVariable != null
+      ) {
+        path = `http://localhost:8000/api/v2/songs-name-genre/${this.inputVariable}/${this.selectGenero}/`;
+        axios
+          .get(path, { responseType: "json" })
+          .then(response => {
+            this.respuesta = response.data;
+            this.video = this.respuesta[0].video_id;
 
-      } else if (this.selectGenero != null && this.selectEmocion != null && this.inputVariable == null) {
             //Consulta para recomendaciones
-            path = `http://localhost:8000/api/v2/songs-genre-mood/${this.selectGenero}/${this.selectEmocion}/`;
+            path = `http://localhost:8000/api/v2/songs-genre-mood/${this.respuesta[0].video_type}/${this.respuesta[0].predicted_moods}/`;
             axios
               .get(path, { responseType: "json" })
               .then(response => {
-                this.generarRecomedaciones(response)
-                this.generarAlerta(1)
-                })
-            .catch(error => {
-              this.generarAlerta(2)
-              console.log("110R-->" + error);
-            });
-
-      } else if (this.selectGenero != null && this.selectEmocion != null && this.inputVariable != null) {
-          this.generarAlerta(3)
-
+                this.generarRecomedaciones(response);
+                this.generarAlerta(1);
+              })
+              .catch(error => {
+                console.log("011R-->" + error);
+              });
+          })
+          .catch(error => {
+            this.generarAlerta(2);
+            console.log("011B-->" + error);
+          });
+      } else if (
+        this.selectGenero != null &&
+        this.selectEmocion != null &&
+        this.inputVariable == null
+      ) {
+        //Consulta para recomendaciones
+        path = `http://localhost:8000/api/v2/songs-genre-mood/${this.selectGenero}/${this.selectEmocion}/`;
+        axios
+          .get(path, { responseType: "json" })
+          .then(response => {
+            this.generarRecomedaciones(response);
+            this.generarAlerta(1);
+          })
+          .catch(error => {
+            this.generarAlerta(2);
+            console.log("110R-->" + error);
+          });
+      } else if (
+        this.selectGenero != null &&
+        this.selectEmocion != null &&
+        this.inputVariable != null
+      ) {
+        this.generarAlerta(3);
       } else {
-        this.generarAlerta(3)
-       };
+        this.generarAlerta(3);
+      }
     }
   }
-}
+};
 </script>
 
 <style lang="css" scoped>
